@@ -4,12 +4,12 @@ Building a simple LAMP stack and deploying Application using Ansible Playbooks.
 
 Prerequisite:
 
-This deployment script requires Ansible 1.6 or above.
-Please deploy this application onto a EC2 Amazon Linux or CentOS. (I just tested the installation on EC2 Amazon Linux)
+This deployment script requires Ansible tools on Admin PC.
+Please deploy this Sinatra application onto a EC2 Amazon Linux or CentOS. (I just tested the installation on EC2 Amazon Linux)
 
 Requires the target Linux OS support "yum" install command.
 
-Requires the target Linux OS have been imported the publich ssh key from ansible node to allow be accessible via SSH from ansible node.
+Requires the target Linux OS have been imported the publich ssh key from ansible Admin PC to allow be accessible via SSH.
 
 
 Usage:
