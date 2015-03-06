@@ -14,13 +14,13 @@ Requires the target Linux OS have been imported the publich ssh key from ansible
 
 Usage:
 
-./installSinatra <username@hostname:ssh-port>
+./installSinatra username@hostname:ssh-port
 
 This will deploy the whole application package on the target host via ansible. Including apache mod passenger, security and hellp world application.
 
 
 Mandatory arguments:
-username@hostname:ssh-port  set the username, hostname and ssh-port to access the target node
+username@hostname:ssh-port      set the username, hostname and ssh-port to access the target node
 
 Example:
 
