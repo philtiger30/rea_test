@@ -42,4 +42,4 @@
   command: unicorn_rails -c /var/www/simple-sinatra-app/config/unicorn.rb -D
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/bin:/usr/local/bin"
-
+  ignore_errors: yes
