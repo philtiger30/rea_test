@@ -16,7 +16,7 @@ Usage:
 
 ./installSinatra username@hostname:ssh-port
 
-This will deploy the whole application package on the target host via ansible. Including apache mod passenger, security and hellp world application.
+This will deploy the whole application package on the target host via ansible. Including nginx with unicorn, security and hello world application.
 
 
 Mandatory arguments:

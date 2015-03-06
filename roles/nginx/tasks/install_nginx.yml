@@ -3,9 +3,11 @@
 
 - name: Add group nginx
   group: name=web state=present
+  ignore_errors: yes 
 
 - name: Add user nginx, and forbid this nginx user to login shell
   command: useradd -s /sbin/nologin -r nginx
+  ignore_errors: yes
 
 - name: Install the latest release repo for nginx
   command: rpm -ivh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
