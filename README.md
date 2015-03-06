@@ -22,4 +22,4 @@ Example:
 This deploy script can be on a single node or multiple nodes. The inventory file 'hosts' defines the nodes in which the stacks should be configured.
 
 The deployment will automatically run the command ansible-playbook -i hosts site.yml
-Once done, you can check the hello world application results by browsing to the http://<hostname>
+Once done, you can check the hello world application results by browsing to the http://hostname
