@@ -1,2 +1,0 @@
-[webservers]
-ip-172-31-22-251:22  ansible_ssh_user=ec2-user
