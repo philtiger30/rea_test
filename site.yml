@@ -1,0 +1,17 @@
+#This playbook deploys the whole application stack in this site.  
+# authoer: Lin Bi
+# date: March 5th 2015
+
+- name: configure and deploy the webservers and application code
+  hosts: webservers
+  sudo: true
+  # The role web will install nginx with unicorn, and install the Ruby application
+  roles:
+    - nginx
+
+- name: ensure that the server is locked down and secure, start iptables, fail2ban 
+  hosts: webservers
+  sudo: true
+  # The security role tasks will install iptables, fail2ban and configure kernal parameters
+  roles:
+    - security

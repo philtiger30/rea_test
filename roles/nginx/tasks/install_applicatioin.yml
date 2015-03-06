@@ -1,0 +1,45 @@
+# This file will install the hello world Ruby application to /var/www files
+
+
+- name: Create web folder for download application
+  file: dest=/var/www state=directory recurse=yes mode=755
+
+- name: get application simple-sinatra-app code from GitHub
+  command: git clone {{ git_path}} {{ web_app_path }}
+  ignore_errors: yes
+
+- name: Change the ownership of /var/www to web group 
+  file: dest=/var/www recurse=yes group=web
+
+- name: Create directories for Ruby application
+  file: dest={{ web_app_path }}/{{ item }} state=directory recurse=yes
+  with_items:
+   - log
+   - config
+   - public
+
+- name: Create tmp directories for Ruby application
+  file: dest={{ web_app_path }}/{{ item }} state=directory recurse=yes mode=1777
+  with_items:
+   - tmp/sockets
+   - tmp/pids
+
+- name: Configure nginx
+  template: src=roles/nginx/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+
+- name: Configure unicorn 
+  template: src=roles/nginx/templates/unicorn.conf.rb.j2 dest={{ web_app_path }}/config/unicorn.rb
+
+- name: Install the application in Ruby Bundle
+  command: bundle install chdir={{ web_app_path }}
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/bin:/usr/local/bin"
+
+- name: Restart nginx server
+  service: name=nginx state=restarted
+
+- name: Start unicorn process
+  command: unicorn_rails -c /var/www/simple-sinatra-app/config/unicorn.rb -D
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/bin:/usr/local/bin"
+

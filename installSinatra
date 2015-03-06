@@ -1,0 +1,44 @@
+#!/bin/bash
+# author: Lin Bi
+# This shell scritp will automatically get the username and hostname
+
+# get the username hostname and ssh port of target node
+if [[ "$1" == *"@"* ]]; then
+    USER=`echo $1 | cut -d@ -f1`
+    HOST=`echo $1 | cut -d@ -f2 | cut -d: -f1`
+    if [[ "$1" == *":"* ]]; then
+    SSHPORT=`echo $1 | cut -d: -f2`
+    fi
+else
+    echo "Usage: $0 <username@host:ssh-port-num>" 
+    echo "Mandatory arguments:"
+    echo "username@hostname:ssh-port  set the username, hostname and ssh-port to access the target node"
+    echo "Examples:"
+    echo "./installSinatra user@hostname:22"
+    echo "./installSinatra ec2-user@172.31.21.211:9898"
+    exit 1
+fi
+
+if [ -z "$SSHPORT" ]; then
+    SSHPORT="22"
+fi
+export SSHPORT=$SSHPORT
+
+# Write ansible inventory file
+touch hosts
+echo "[webservers]" >>  hosts
+echo "$HOST:$SSHPORT  ansible_ssh_user=$USER" >> hosts
+
+# Write the global variables for ansible group_vars
+touch group_vars/remoteuser
+#echo "ssh_user: $USER" >> group_vars/all
+echo "ssh_user: $USER" >> group_vars/remoteuser
+#echo "ssh_port: $SSHPORT" >> group_vars/all
+
+# Configure the host
+ansible-playbook -i hosts site.yml
+
+
+# remove the tmp hosts file
+rm hosts
+rm group_vars/remoteuser

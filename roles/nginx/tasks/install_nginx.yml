@@ -1,0 +1,42 @@
+---
+# These tasks install nginx web server with unicorn and all dependent modules.
+
+- name: Add group nginx
+  group: name=web state=present
+
+- name: Add user nginx, and forbid this nginx user to login shell
+  command: useradd -s /sbin/nologin -r nginx
+
+- name: Install the latest release repo for nginx
+  command: rpm -ivh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+  ignore_errors: yes
+
+- name: Install nginx git gcc and ruby etc
+  yum: name={{ item }} state=present
+  with_items:
+   - libcurl-devel
+   - httpd-devel
+   - ruby
+   - ruby-devel
+   - apr-devel
+   - apr-util-devel
+   - rubygems
+   - zlib
+   - zlib-devel
+   - openssl-devel
+   - git
+   - gcc
+   - gcc-c++
+   - nginx
+  ignore_errors: yes
+
+- name: Install Development Tools
+  command: yum -y groupinstall "Development Tools"
+  ignore_errors: yes
+ 
+- name: gem install bundle and unicorn
+  command: gem install {{ item }} 
+  with_items:
+   - bundle 
+   - unicorn
+  ignore_errors: yes

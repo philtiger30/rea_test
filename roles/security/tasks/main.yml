@@ -1,0 +1,87 @@
+---
+# This playbook contains security that will be run on all nodes.
+
+# These tasks install security modules, like iptables and fail2ban.
+
+- name: Install apache git gcc and ruby etc
+  yum: name={{ item }} state=present
+  with_items:
+    - iptables
+    - fail2ban
+  ignore_errors: yes
+ 
+# Configure iptable security rules 
+- name: Allow input http traffic from port 80
+  command: iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+- name: Allow output http traffic from port 80
+  command: iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
+
+- name: Allow input SSH traffic from port 22
+  command: iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+- name: Allow output SSH traffic from port 22
+  command: iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
+
+#- name: Allow input icmp(ping) for trouble shooting
+#  command: iptables -A INPUT -p icmp -j ACCEPT
+
+#- name: Allow output icmp(ping) for trouble shooting
+#  command: iptables -A OUTPUT -p icmp -j ACCEPT
+
+- name: Allow localhost traffic
+  command: iptables -A INPUT -i lo -j ACCEPT
+
+- name: Drop invalid TCP packets (Forward)
+  command: iptables -A FORWARD -p tcp ! --syn -m state --state NEW -j DROP 
+
+- name: Drop invalid TCP packets (INPUT)
+  command: iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+
+- name: Allow existing traffic (INPUT)
+  command: iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+- name: Allow existing traffic (OUTPUT)
+  command: iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+- name: Drop all other input traffic
+  command: iptables -P INPUT DROP
+
+- name: Drop all other forward traffic
+  command: iptables -P FORWARD DROP
+
+- name: Allow all other output traffic 
+  command: iptables -P OUTPUT ACCEPT
+
+# Save iptable rules into /etc/sysconfig/iptable
+- name: save new iptables rules in config files
+  command: service iptables save
+
+# let iptables auto start at level 234
+- name: chkconfig iptables --level 234 on
+  command: chkconfig iptables --level 234 on
+
+- name: restart iptables
+  service: name=iptables state=restarted
+
+# Configure Linux Kernal to ignore ping or broadcast request
+- name: Ignore ICMP request on sysctl
+  command: sysctl -w net.ipv4.icmp_echo_ignore_all=1
+
+- name: Ignore Broadcast request
+  command: sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1
+
+
+# configure fail2ban rules
+#- name: restart fail2ban
+#  service: name=fail2ban enabled=yes state=restarted
+
+#- name: chkconfig fail2ban --level 234 on
+#  command: chkconfig fail2ban --level 234 on
+
+# enable the SELinux is running
+#- name: test to see if selinux is running
+#  command: getenforce
+#  register: sestatus
+#  changed_when: false
+
