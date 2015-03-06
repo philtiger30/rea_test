@@ -1,4 +1,3 @@
-Building a simple LAMP stack and deploying Application using Ansible Playbooks.
 # author: Lin Bi
 -------------------------------------------
 
@@ -30,7 +29,7 @@ Example:
  
 
 
-This deploy script can be on a single node or multiple nodes. The inventory file 'hosts' defines the nodes in which the stacks should be configured.
+This deploy script can be on a single node. The inventory file 'hosts' defines the nodes in which the stacks should be configured.
 
 The deployment will automatically run the command ansible-playbook -i hosts site.yml
 
