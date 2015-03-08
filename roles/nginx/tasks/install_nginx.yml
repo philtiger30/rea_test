@@ -17,7 +17,7 @@
   yum: name={{ item }} state=present
   with_items:
    - libcurl-devel
-   - httpd-devel
+#   - httpd-devel
    - ruby
    - ruby-devel
    - apr-devel
