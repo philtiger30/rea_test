@@ -30,6 +30,7 @@
    - gcc
    - gcc-c++
    - nginx
+   - libselinux-python
   ignore_errors: yes
 
 - name: Install Development Tools
