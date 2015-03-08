@@ -1,19 +1,25 @@
-# set path to app that will be used to configure unicorn,
-# note the trailing slash in this example
+# Unicorn configuration
+
+# the path to place the application
 APP_PATH = "/var/www/simple-sinatra-app"
 
-worker_processes 3
-working_directory APP_PATH 
-timeout 30
+#number of worker
+worker_processes 5
 
-# Specify path to socket unicorn listens to,
-# we will use this in our nginx.conf later
+# point to project directory
+working_directory APP_PATH 
+
+# listen to local socket
 listen "#{APP_PATH}/tmp/sockets/unicorn.sock", :backlog => 64
 
-# Set process id path
-pid "#{APP_PATH}/tmp/pids/unicorn.pid"
+# request time out time,unit is seconds
+timeout 180
 
-# Set log file paths
+# unicorn log path
 stderr_path "#{APP_PATH}/log/unicorn.stderr.log"
 stdout_path "#{APP_PATH}/log/unicorn.stdout.log"
-#
+
+# unicorn master pid
+# # unicorn pid path
+pid "#{APP_PATH}/tmp/pids/unicorn.pid"
+

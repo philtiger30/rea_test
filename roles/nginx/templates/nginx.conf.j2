@@ -2,10 +2,16 @@
 # Author: Lin Bi
 # CTime: 06/03/2015
 
+# set the username and groupname for nginx server
 user nginx web; 
-worker_processes  4;
 
+#set the worker process
+worker_processes  5;
+
+#set the error_log path
 error_log  /var/log/nginx/error.log;
+
+#set the pid path
 pid        /var/log/nginx.pid;
 
 events {
@@ -30,25 +36,32 @@ http {
   gzip  on;
   gzip_disable "MSIE [1-6]\.(?!.*SV1)";
 
+# set the upstream path to the socket
   upstream myserver {
     server unix:/var/www/simple-sinatra-app/tmp/sockets/unicorn.sock
         fail_timeout=0;
   }
 
+
+#set the server configuration
   server {
     root /var/www/simple-sinatra-app/public;
+# listen to the port 80 of HTTP
     listen 80;
-    server_name www.xx.com;
+    server_name www.xxx.com;
 
     location / {
-      try_files $uri @app;
+      try_files $uri @sinatra;
     }
 
-    location @app {
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_redirect off;
+    location @sinatra {
       proxy_pass http://myserver;
+# turn off the redicrect for proxy
+      proxy_redirect off;
+#set the proxy header
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
   }
 }
