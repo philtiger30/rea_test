@@ -1,2 +1,0 @@
-[webservers]
-ip-172-31-18-94:22  ansible_ssh_user=root
