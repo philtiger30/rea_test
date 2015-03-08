@@ -75,9 +75,11 @@
 # configure fail2ban rules
 - name: restart fail2ban
   service: name=fail2ban enabled=yes state=restarted
+  ignore_errors: yes
 
 - name: chkconfig fail2ban --level 234 on
   command: chkconfig fail2ban --level 234 on
+  ignore_errors: yes
 
 # enable the SELinux is running
 #- name: test to see if selinux is running
