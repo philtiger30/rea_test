@@ -13,7 +13,7 @@
   command: rpm -ivh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
   ignore_errors: yes
 
-- name: Install nginx git gcc and ruby etc
+- name: Install nginx git gcc and ruby etc. It costs about 5 to 10 minusts
   yum: name={{ item }} state=present
   with_items:
    - libcurl-devel
