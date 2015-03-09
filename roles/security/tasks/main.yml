@@ -3,7 +3,7 @@
 
 # These tasks install security modules, like iptables and fail2ban.
 
-- name: Install apache git gcc and ruby etc
+- name: Install iptables and fail2ban etc
   yum: name={{ item }} state=present
   with_items:
     - iptables
