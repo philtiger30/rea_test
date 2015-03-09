@@ -4,7 +4,7 @@
 Prerequisite:
 
 This deployment script requires Ansible tools on Admin PC.
-Please deploy this Sinatra application onto a EC2 Amazon Linux or CentOS. (I just tested the installation on EC2 Amazon Linux)
+Please deploy this Sinatra application onto a EC2 Amazon Linux or RHEL 6. (I just tested the installation on EC2 Amazon Linux)
 
 Requires the target Linux OS support "yum" install command.
 

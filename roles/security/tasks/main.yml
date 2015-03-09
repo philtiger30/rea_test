@@ -81,9 +81,8 @@
   command: chkconfig fail2ban --level 234 on
   ignore_errors: yes
 
-# enable the SELinux is running
-#- name: test to see if selinux is running
-#  command: getenforce
-#  register: sestatus
-#  changed_when: false
-
+# disable the SELinux, so that the ruby application can listen to the socket
+- name: disable the SELinux
+  command: setenforce 0
+  when: ansible_distribution == "RedHat"
+  ignore_errors: true
