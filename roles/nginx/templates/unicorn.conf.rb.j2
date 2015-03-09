@@ -10,7 +10,7 @@ worker_processes 1
 working_directory APP_PATH 
 
 # listen to local socket
-listen APP_PATH + "/tmp/sockets/unicorn.sock", :backlog => 64
+listen "127.0.0.1:9494"
 
 # request time out time,unit is seconds
 timeout 180

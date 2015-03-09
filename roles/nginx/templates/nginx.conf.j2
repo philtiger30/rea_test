@@ -25,7 +25,7 @@ http {
   include /etc/nginx/mime.types;
   default_type application/octet-stream;
 # set format of logs
-  access_log /tmp/nginx.access.log combined;
+  access_log /var/log/nginx/nginx.access.log combined;
 
   sendfile        on;
   #tcp_nopush     on;
@@ -38,7 +38,7 @@ http {
 
 # set the upstream path to the socket
   upstream myserver {
-    server unix:/var/www/simple-sinatra-app/tmp/sockets/unicorn.sock
+    server 127.0.0.1:9494
         fail_timeout=0;
   }
 
