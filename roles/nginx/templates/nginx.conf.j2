@@ -12,7 +12,7 @@ worker_processes  1;
 error_log  /var/log/nginx/error.log;
 
 #set the pid path
-pid        /var/log/nginx.pid;
+pid        /var/run/nginx.pid;
 
 events {
   # use epoll  # on kernal linux 2.6 above, open for production
