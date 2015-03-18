@@ -3,11 +3,9 @@
 
 - name: Add group nginx
   group: name=web state=present
-  ignore_errors: yes 
 
 - name: Add user nginx, and forbid this nginx user to login shell
-  command: useradd -s /sbin/nologin -r nginx
-  ignore_errors: yes
+  user: name=nginx  shell=/sbin/nologin group=web
 
 - name: Install the latest release repo for nginx
   command: rpm -ivh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
@@ -17,7 +15,6 @@
   yum: name={{ item }} state=present
   with_items:
    - libcurl-devel
-#   - httpd-devel
    - ruby
    - ruby-devel
    - apr-devel
@@ -31,15 +28,12 @@
    - gcc-c++
    - nginx
    - libselinux-python
-  ignore_errors: yes
 
-- name: Install Development Tools
-  command: yum -y groupinstall "Development Tools"
-  ignore_errors: yes
+- name: Install Development Tools package group
+  yum: name="@Development tools" state=present
  
 - name: gem install bundle and unicorn
-  command: gem install {{ item }} 
+  gem: name={{ item }} state=latest user_install=no
   with_items:
    - bundle 
    - unicorn
-  ignore_errors: yes

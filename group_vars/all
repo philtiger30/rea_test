@@ -3,4 +3,4 @@
 
 web_name: simple-sinatra-app
 web_app_path: /var/www/simple-sinatra-app
-git_path: git://github.com/tnh/simple-sinatra-app.git
+git_path: https://github.com/tnh/simple-sinatra-app

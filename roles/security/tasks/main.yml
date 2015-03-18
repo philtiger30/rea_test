@@ -8,7 +8,6 @@
   with_items:
     - iptables
     - fail2ban
-  ignore_errors: yes
  
 # Configure iptable security rules 
 - name: Allow input http traffic from port 80
@@ -71,18 +70,14 @@
 - name: Ignore Broadcast request
   command: sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1
 
-
 # configure fail2ban rules
 - name: restart fail2ban
   service: name=fail2ban enabled=yes state=restarted
-  ignore_errors: yes
 
 - name: chkconfig fail2ban --level 234 on
   command: chkconfig fail2ban --level 234 on
-  ignore_errors: yes
 
 # disable the SELinux, so that the ruby application can listen to the socket
 - name: disable the SELinux
   command: setenforce 0
   when: ansible_distribution == "RedHat"
-  ignore_errors: true

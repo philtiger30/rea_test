@@ -2,14 +2,10 @@
 
 
 - name: Create web folder for download application
-  file: dest=/var/www state=directory recurse=yes mode=755
+  file: dest=/var/www state=directory recurse=yes mode=755 owner=nginx group=web
 
 - name: get application simple-sinatra-app code from GitHub
-  command: git clone {{ git_path}} {{ web_app_path }}
-  ignore_errors: yes
-
-- name: Change the ownership of /var/www to web group 
-  file: dest=/var/www recurse=yes group=web
+  git:  repo={{ git_path}} dest={{ web_app_path }} 
 
 - name: Create directories for Ruby application
   file: dest={{ web_app_path }}/{{ item }} state=directory recurse=yes
@@ -19,14 +15,10 @@
    - public
 
 - name: Create tmp directories for Ruby application
-  file: dest={{ web_app_path }}/{{ item }} state=directory recurse=yes mode=1777
-  with_items:
-   - tmp/sockets
-   - tmp/pids
+  file: dest={{ web_app_path }}/pids state=directory recurse=yes mode=777
 
 - name: Configure nginx
   template: src=roles/nginx/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
-  ignore_errors: yes  
 
 - name: Configure unicorn 
   template: src=roles/nginx/templates/unicorn.conf.rb.j2 dest={{ web_app_path }}/config/unicorn.rb
@@ -35,12 +27,12 @@
   command: bundle install chdir={{ web_app_path }}
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/bin:/usr/local/bin"
+  notify: restart nginx
 
-- name: Restart nginx server
-  service: name=nginx state=restarted
+#- name: start nginx server
+#  service: name=nginx state=restarted
 
 - name: Start unicorn process
   command: unicorn_rails -c /var/www/simple-sinatra-app/config/unicorn.rb -D
   environment:
     PATH: "{{ ansible_env.PATH }}:/usr/bin:/usr/local/bin"
-  ignore_errors: yes
