@@ -18,7 +18,7 @@ Usage: (I writen 2 scripts with both bash shell and python to install Sinatra, y
 
 or use python scripts to install
 
-./pyinstallSinatra username@hostname:ssh-port
+./pyinstallSinatra.py username@hostname:ssh-port
 
 This will deploy the whole application package on the target host via ansible. Including nginx with unicorn, security and hello world application.
 
@@ -35,9 +35,9 @@ Example:
 
 or in python to install
 
-./pyinstallSinatra user@hostname:22
+./pyinstallSinatra.py user@hostname:22
 
-./pyinstallSinatra ec2-user@172.31.21.211:9898
+./pyinstallSinatra.py ec2-user@172.31.21.211:9898
 
 
 This deploy script can be on a single node. The inventory file 'hosts' defines the nodes in which the stacks should be configured.
