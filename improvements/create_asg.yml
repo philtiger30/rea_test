@@ -1,0 +1,15 @@
+---
+- name: Create Auto Scaling Group to deploy the EC2 instance
+  ec2_asg:
+    name: myasg
+    load_balancers: [ 'lb1', 'lb2' ]
+    availability_zones: [ 'ap-southeast-2a', 'ap-southeastt-2b' ]
+    launch_config_name: 'lc-1'
+    min_size: 1
+    max_size: 4
+    desired_capacity: 2
+    vpc_zone_identifier: [ 'subnet-ce8027b9', 'subnet-abcd0009' ]
+    tags:
+      - environment: production
+        propagate_at_launch: no
+

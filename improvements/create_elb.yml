@@ -1,0 +1,10 @@
+---
+- name: Registe EC2 instance to ELB
+  # Gathering ec2 facts
+  action: ec2_facts
+  local_action:
+    module: ec2_elb
+    instance_id: "{{ ansible_ec2_instance_id }}"
+    ec2_elbs: "{{ item }}"
+    state: 'present'
+  with_items: ec2_elbs

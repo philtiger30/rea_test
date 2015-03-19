@@ -1,0 +1,10 @@
+---
+- name: Create a new DNS name for the website with AWS Route 53
+  route53:
+    command: create
+    zone: sinatra.com
+    record: new.sinatra.com
+    type: A
+    ttl: 7200
+    value: 1.1.1.1
+

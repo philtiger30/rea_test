@@ -1,0 +1,7 @@
+---
+- name: bake the EC2 instance to AMI
+  ec2_ami:
+    instance_id: i-xxxxxx
+    wait: yes
+    name: newtest
+  register: instance

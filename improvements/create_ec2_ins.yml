@@ -1,0 +1,13 @@
+---
+- name: Create EC2 instance
+  ec2:
+    key_name: LinKey
+    instance_type: t2.micro
+    image: ami-dfc39aef 
+    wait: yes
+    group_id: sg-ac8ed0c9
+    region: us-west-2
+    count: 1
+    vpc_subnet_id: subnet-ce8027b9
+    assign_public_ip: yes
+

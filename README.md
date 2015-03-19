@@ -1,6 +1,5 @@
 # author: Lin Bi
 -------------------------------------------
-
 Prerequisite:
 
 This deployment script requires Ansible tools on Admin PC.
@@ -12,7 +11,7 @@ Requires the target Linux OS support "yum" install command.
 Requires the target Linux OS have been imported the publich ssh key from ansible Admin PC to allow be accessible via SSH.
 
 
-Usage: (I writen 2 scripts with both bash shell and python to install Sinatra, you can chooese any one of it)
+Usage: (I wrote 2 scripts with both bash shell and python to install Sinatra, you can choose any either of them)
 
 ./installSinatra username@hostname:ssh-port
 
@@ -33,15 +32,16 @@ Example:
 
 ./installSinatra ec2-user@172.31.21.211:9898
 
-or in python to install
+or use python scripts to install
 
 ./pyinstallSinatra.py user@hostname:22
-
-./pyinstallSinatra.py ec2-user@172.31.21.211:9898
-
 
 This deploy script can be on a single node. The inventory file 'hosts' defines the nodes in which the stacks should be configured.
 
 The deployment will automatically run the command ansible-playbook -i hosts site.yml
 
 Once done, you can check the hello world application results by browsing to the http://hostname
+
+# See the directory "improvements" to improve the deployment
+-------------------------------------------
+

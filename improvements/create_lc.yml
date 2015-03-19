@@ -1,0 +1,11 @@
+---
+- name: Create launch configuration
+  ec2_lc:
+    name: lc-1
+    image_id: ami-dfc39aef 
+    key_name: LinKey
+    group_id: sg-ac8ed0c9
+    instance_type: t2.micro
+    region: us-west-2
+    assign_public_ip: yes
+
