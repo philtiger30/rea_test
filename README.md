@@ -1,7 +1,7 @@
 # author: Lin Bi
 -------------------------------------------
-Prerequisite:
-
+#Prerequisite:
+-------------------------------------------
 This deployment script requires Ansible tools on Admin PC.
 
 Please deploy this Sinatra application onto a EC2 Amazon Linux or RHEL 6. (I just tested the installation on EC2 Amazon Linux)
@@ -11,7 +11,9 @@ Requires the target Linux OS support "yum" install command.
 Requires the target Linux OS have been imported the publich ssh key from ansible Admin PC to allow be accessible via SSH.
 
 
-Usage: (I wrote 2 scripts with both bash shell and python to install Sinatra, you can choose any either of them)
+#Usage:
+-------------------------------------------
+(I wrote 2 scripts with both bash shell and python to install Sinatra, you can choose any either of them)
 
 ./installSinatra username@hostname:ssh-port
 
@@ -42,6 +44,6 @@ The deployment will automatically run the command ansible-playbook -i hosts site
 
 Once done, you can check the hello world application results by browsing to the http://hostname
 
-# See the directory "improvements" to improve the deployment
+# See the directory "improvements" to get some tips how to improve the deployment
 -------------------------------------------
 

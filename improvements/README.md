@@ -1,8 +1,9 @@
 # author: Lin Bi
 -------------------------------------------
 The general idea to improve the Hellp World app is to use some AWS service to get a robust and redundant deployment in AWS cloud.
+Another idea to improve is to use Nagios to monitor the servers and deploy HA proxy for the load sharing.
 
-#Example on AWS cloud platform: 
+#Examples on AWS cloud platform: 
 -------------------------------------------
 Add "-include create_ec2_ins" in your ansible playbook to create AWS EC2 instance with ansible ec2 module.
 
